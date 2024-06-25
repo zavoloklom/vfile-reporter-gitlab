@@ -1,93 +1,162 @@
-# vfile-reporter-gitlab
+# VFile Reporter in Gitlab Codequality Format
 
+[![Latest Release](https://img.shields.io/npm/v/%40gitlab-formatters%2Fvfile-reporter-gitlab?style=flat-square)](https://www.npmjs.com/package/@gitlab-formatters/vfile-reporter-gitlab)
+![Coverage Badge](https://img.shields.io/codacy/coverage/adfdd9f8f6e640dc967d5e6bc47f6fd3?style=flat-square&label=Coverage)
+[![Codacy Code Quality Badge](https://img.shields.io/codacy/grade/adfdd9f8f6e640dc967d5e6bc47f6fd3?style=flat-square&logo=codacy&label=Code%20Quality)](https://app.codacy.com/gl/gitlab-formatters/vfile-reporter-gitlab/dashboard?utm_source=gl&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=whit&style=flat-square)](https://conventionalcommits.org)
 
+Formatter that transforms [VFile](https://github.com/vfile/vfile) error reports into a format suitable for use
+with [GitLab widgets](https://docs.gitlab.com/ee/ci/testing/code_quality.html).
 
-## Getting started
+And it could be used with linting tools like [Remark Lint](https://github.com/remarkjs/remark-lint).
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.com/gitlab-formatters/vfile-reporter-gitlab.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.com/gitlab-formatters/vfile-reporter-gitlab/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+> The source code is hosted on [GitLab](https://gitlab.com/gitlab-formatters/vfile-reporter-gitlab).
+> Although there is an automatic mirror of this repository
+> on [GitHub](https://github.com/zavoloklom/vfile-reporter-gitlab), all bug reports, feature requests, and merge
+> requests should be submitted through GitLab.
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Install `vfile` and `@gitlab-formatters/vfile-reporter-gitlab` using your package manager:
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+```bash
+npm install --save-dev vfile @gitlab-formatters/vfile-reporter-gitlab
+```
+
+```bash
+yarn add --dev vfile @gitlab-formatters/vfile-reporter-gitlab
+```
+
+And you can run it in your code using either ESM or CommonJS syntax.
+
+```js
+import {VFile} from 'vfile';
+import gitlabCodeQualityFormatter from '@gitlab-formatters/vfile-reporter-gitlab';
+
+const one = new VFile({path: 'test/fixture/1.js'});
+const two = new VFile({path: 'test/fixture/2.js'});
+
+one.message('Warning!', {line: 2, column: 4});
+
+console.log(gitlabCodeQualityFormatter([one, two]));
+```
+
+Console output would be:
+
+```json
+[{"type":"issue","check_name":"Unknown Rule","description":"Warning!","content":{"body":"Error found in Unknown Rule."},"categories":["Style"],"location":{"path":"test/fixture/1.js","lines":{"begin":2,"end":2},"positions":{"begin":{"line":2,"column":4},"end":{"line":2,"column":4}}},"severity":"minor","fingerprint":"079dd4da95f949d9a91749b0130098f1"}]
+```
+
+## Usage with Remark Lint
+
+Install `remark-cli` and `@gitlab-formatters/vfile-reporter-gitlab` using your package manager:
+
+```bash
+npm install --save-dev remark-cli @gitlab-formatters/vfile-reporter-gitlab
+```
+
+```bash
+yarn add --dev remark-cli @gitlab-formatters/vfile-reporter-gitlab
+```
+
+To use in your project, simply run:
+
+```bash
+npx remark . --report @gitlab-formatters/vfile-reporter-gitlab
+```
+
+For integration with GitLab CI, add the following to your `.gitlab-ci.yml`:
+
+```yml
+remark:
+  image: node:20.14.0-alpine3.20
+  stage: codequality
+  script:
+    - npm ci
+    - npx remark . --report @gitlab-formatters/vfile-reporter-gitlab 2>gl-codequality.json
+  artifacts:
+    reports:
+      codequality: gl-codequality.json
+```
+
+## Output Example
+
+Below is a JSON example of how the formatter reports issues.
+
+This particular example outputs a detailed report that goes beyond the minimal fields required by GitLab's code quality
+widgets.
+
+While GitLab requires only a subset of fields according to
+the [Gitlab Code Quality specification](https://docs.gitlab.com/ee/ci/testing/code_quality.html#implement-a-custom-tool),
+this formatter implements the full set of fields as outlined in
+the [Code Climate Issue Data Type specification](https://github.com/codeclimate/platform/blob/master/spec/analyzers/SPEC.md#issues).
+
+This comprehensive implementation enhances the depth of information available and facilitates better issue tracking and
+resolution.
+
+```json
+[
+  {
+    "type": "issue",
+    "check_name": "no-undefined-references",
+    "description": "Unexpected reference to undefined definition, expected corresponding definition (``) for a link or escaped opening bracket (`\\[`) for regular text",
+    "content": {
+      "body": "Error found in no-undefined-references. See https://github.com/remarkjs/remark-lint/tree/main/packages/remark-lint-no-undefined-references#readme for more details."
+    },
+    "categories": [
+      "Style"
+    ],
+    "location": {
+      "path": "README.md",
+      "lines": {
+        "begin": 16,
+        "end": 16
+      },
+      "positions": {
+        "begin": {
+          "line": 16,
+          "column": 3
+        },
+        "end": {
+          "line": 16,
+          "column": 6
+        }
+      }
+    },
+    "severity": "minor",
+    "fingerprint": "e2a76405959e5bc34b5a22fda2832b16"
+  }
+]
+```
+
+You can see an example of the widget and how errors are displayed
+in [Merge Request #1](https://gitlab.com/gitlab-formatters/vfile-reporter-gitlab/-/merge_requests/1).
+
+This merge request includes detailed examples and explanations of the widget's functionality, showcasing how it
+integrates with GitLab to display code quality issues reported by Remark.
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+If you'd like to contribute to this project, please read through [CONTRIBUTING.md](./CONTRIBUTING.md) file.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+Please note that this project is released with a [Contributor Code of Conduct](./CODE_OF_CONDUCT.md). By participating
+in this project you agree to abide by its causes.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+## Changelog
+
+> Changelog is automatically generated based on [semantic-release](https://github.com/semantic-release/changelog)
+> and [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+
+See the [CHANGELOG.md](./CHANGELOG.md) file for detailed lists of changes for each version.
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+MIT License. See the [License File](./LICENSE) for more information.
+
+## Contacts
+
+If you have any questions or suggestions, feel free to reach me out by:
+
+- Email: [s.kupletsky@gmail.com](mailto:s.kupletsky@gmail.com)
+- X/Twitter: <https://x.com/zavoloklom>
+- GitHub: <https://github.com/zavoloklom>
