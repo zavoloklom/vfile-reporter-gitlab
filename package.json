@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@gitlab-formatters/eslint-formatter-gitlab": "1.0.1",
-    "@rollup/plugin-commonjs": "26.0.1",
+    "@rollup/plugin-commonjs": "26.0.3",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@rollup/plugin-typescript": "11.1.6",
     "@semantic-release/changelog": "6.0.3",
